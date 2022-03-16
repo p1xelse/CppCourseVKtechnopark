@@ -2,7 +2,7 @@ check:
 	./run_linters.sh
 
 build:
-	echo "Typo"
+	echo "Typoasdasda"
 
 test:
 	echo "Testing"
