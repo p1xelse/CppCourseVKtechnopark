@@ -1,0 +1,9 @@
+/home/p1xelse/tpmain_cpp/hw1/project/build/CMakeFiles/vector_arr.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/CMakeFiles/edit_cache.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/CMakeFiles/rebuild_cache.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/vector_array/CMakeFiles/vector_array_lib.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/vector_array/CMakeFiles/edit_cache.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/vector_array/CMakeFiles/rebuild_cache.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/tests/CMakeFiles/test_vector_array.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/tests/CMakeFiles/edit_cache.dir
+/home/p1xelse/tpmain_cpp/hw1/project/build/tests/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,2 @@
+/usr/bin/ar qc libvector_array_lib.a CMakeFiles/vector_array_lib.dir/vector.c.o CMakeFiles/vector_array_lib.dir/vector_array.c.o
+/usr/bin/ranlib libvector_array_lib.a

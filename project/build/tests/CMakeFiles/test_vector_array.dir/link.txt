@@ -1,0 +1,1 @@
+/usr/bin/c++ -fprofile-arcs -ftest-coverage -O0  -coverage -lgcov -coverage -lgcov CMakeFiles/test_vector_array.dir/test_vector_array.cpp.o -o test_vector_array  ../vector_array/libvector_array_lib.a /usr/lib/libgtest_main.so.1.11.0 /usr/lib/libgtest.so.1.11.0 
