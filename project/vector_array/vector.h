@@ -1,3 +1,7 @@
+#ifndef PROJECT_VECTOR_ARRAY_VECTOR_H_
+#define PROJECT_VECTOR_ARRAY_VECTOR_H_
+
+#include <stdio.h>
 #include <stdlib.h>
 
 #define ERR_MEM 10
@@ -5,8 +9,7 @@
 #define ERR_EXTEND_SIZE 12
 #define ERR_ZERO_BYTES_ALLOC 13
 
-typedef struct
-{
+typedef struct {
     int *buffer;
     int size;
     int capacity;
@@ -19,3 +22,5 @@ void vector_free(vector_t *vector);
 int vector_read(vector_t *vector, FILE *f);
 int vector_extend(vector_t *vector, int extend_size);
 void print_vector(vector_t *vector);
+
+#endif  // PROJECT_VECTOR_ARRAY_VECTOR_H_

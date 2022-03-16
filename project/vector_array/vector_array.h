@@ -1,3 +1,6 @@
+#ifndef PROJECT_VECTOR_ARRAY_VECTOR_ARRAY_H_
+#define PROJECT_VECTOR_ARRAY_VECTOR_ARRAY_H_
+
 #include <stdio.h>
 
 #include "vector.h"
@@ -12,3 +15,5 @@ int read_array_len(FILE *f, int *len);
 void free_vector_array(vector_t **arr, int count);
 int align_vectors_len_in_arr(vector_t **arr, int len);
 void print_vector_arr(vector_t **arr, int len);
+
+#endif  // PROJECT_VECTOR_ARRAY_VECTOR_ARRAY_H_

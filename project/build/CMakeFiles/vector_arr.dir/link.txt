@@ -1,1 +1,0 @@
-/usr/bin/cc -fprofile-arcs -ftest-coverage -fPIC -O0  -coverage -lgcov -rdynamic CMakeFiles/vector_arr.dir/main.c.o -o vector_arr  vector_array/libvector_array_lib.a 
