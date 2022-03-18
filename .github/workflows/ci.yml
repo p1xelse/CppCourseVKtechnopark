@@ -33,7 +33,7 @@ jobs:
   memtest:
     runs-on: ubuntu-latest
     container: p1xelelse/image_for_cpp
-    needs: [build]
+    needs: [test]
     steps:
       - uses: actions/checkout@v2 
       - run: make memtest
