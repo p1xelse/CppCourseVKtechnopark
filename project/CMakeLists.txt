@@ -1,10 +1,4 @@
-cmake_minimum_required(VERSION 3.0.0)
-project(vector_arr)
-
 add_subdirectory(vector_array)
-
-set(CMAKE_C_FLAGS ${CMAKE_C_FLAGS} "-fprofile-arcs -ftest-coverage -fPIC -O0")
-
 
 add_executable(${PROJECT_NAME} main.c)
 
