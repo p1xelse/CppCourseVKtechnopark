@@ -36,7 +36,8 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: valgrind.log
-          path: build/report/vector_array
+          path: 
+            - valgrind.log
+            - build/report/vector_array
 
 
