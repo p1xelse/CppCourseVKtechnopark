@@ -36,8 +36,7 @@ jobs:
       - name: Upload valgrind artifacts
         uses: actions/upload-artifact@v2
         with:
-          path: 
-            - valgrind.log
+          path: valgrind.log
       - name: Upload code coverage artifacts
         uses: actions/upload-artifact@v23
         with:
