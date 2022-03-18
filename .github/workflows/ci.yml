@@ -14,10 +14,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2 
     - run: make build
+    - run: echo hello > build/arcifacts.txt
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        path: /build/main.out
+        path: build/arcifacts.txt
   test:
     runs-on: ubuntu-latest
     container: leshiy1295/gcc_linters_valgrind_cmake_gtest
