@@ -25,6 +25,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2 
       - run: make test
+      - name: Upload code coverage artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: build/report/vector_array
+
   memtest:
     runs-on: ubuntu-latest
     container: p1xelelse/image_for_cpp
@@ -36,9 +41,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           path: valgrind.log
-      - name: Upload code coverage artifacts
-        uses: actions/upload-artifact@v23
-        with:
-          path: build/report/vector_array
-
 
