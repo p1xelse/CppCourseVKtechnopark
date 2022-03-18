@@ -25,4 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2 
       - run: make test
+      - run: make coverage
+  memtest:
+    runs-on: ubuntu-latest
+    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2 
+      - run: make memtest
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: valgrind.log
+          path: build/report/vector_array
+
 
