@@ -9,15 +9,15 @@ extern "C"
 #include <stdio.h>
 }
 
-TEST(ReadArrayLen, TestBasic)
+TEST(readArrayLen, testBasic)
 {
 
-    char input_str[] = "3 "
+    char inputStr[] = "3 "
                        "7 5 16 0"
                        "1 2 3 4 5 0"
                        "1 2 0";
 
-    FILE *f = fmemopen(input_str, strlen(input_str), "r");
+    FILE *f = fmemopen(inputStr, strlen(inputStr), "r");
     int len = 0;
     int err = read_array_len(f, &len);
     EXPECT_EQ(0, err);
@@ -25,72 +25,71 @@ TEST(ReadArrayLen, TestBasic)
     fclose(f);
 }
 
-TEST(ReadArrayLen, NegTestNegativeLen)
+TEST(readArrayLen, negTestNegativeLen)
 {
 
-    char input_str[] = "-1 "
+    char inputStr[] = "-1 "
                        "7 5 16 0"
                        "1 2 3 4 5 0"
                        "1 2 0";
 
-    FILE *f = fmemopen(input_str, strlen(input_str), "r");
+    FILE *f = fmemopen(inputStr, strlen(inputStr), "r");
     int len = 0;
     int err = read_array_len(f, &len);
     EXPECT_NE(0, err);
     fclose(f);
 }
 
-TEST(ReadArrayLen, NegTestZeroLen)
+TEST(readArrayLen, negTestZeroLen)
 {
-    char input_str[] = "0  "
+    char inputStr[] = "0  "
                        "7 5 16 0"
                        "1 2 3 4 5 0"
                        "1 2 0";
 
-    FILE *f = fmemopen(input_str, strlen(input_str), "r");
+    FILE *f = fmemopen(inputStr, strlen(inputStr), "r");
     int len = 0;
     int err = read_array_len(f, &len);
     EXPECT_NE(0, err);
     fclose(f);
 }
 
-TEST(ReadArrayLen, NegTestInvalidLen)
+TEST(readArrayLen, negTestInvalidLen)
 {
 
-    char input_str[] = "a "
+    char inputStr[] = "a "
                        "7 5 16 0"
                        "1 2 3 4 5 0"
                        "1 2 0";
 
-    FILE *f = fmemopen(input_str, strlen(input_str), "r");
+    FILE *f = fmemopen(inputStr, strlen(inputStr), "r");
     int len = 0;
     int err = read_array_len(f, &len);
     EXPECT_NE(0, err);
     fclose(f);
 }
 
-void ASSERT_EQ_VECTORS(vector_t *vector, std::vector<int> vector_stl, int len)
+void ASSERT_EQ_VECTORS(vector_t *vector, std::vector<int> vectorStl, int len)
 {
     for (int i = 0; i < len; i++)
     {
-        ASSERT_EQ(vector->buffer[i], vector_stl[i]);
+        ASSERT_EQ(vector->buffer[i], vectorStl[i]);
     }
 }
 
-TEST(ReadVectorArray, TestBasic)
+TEST(readVectorArray, testBasic)
 {
+    std::vector<int> expectedArr[3];
+    expectedArr[0] = {7, 5, 16, 0};
+    expectedArr[1] = {1, 2, 3, 4, 5, 0};
+    expectedArr[2] = {1, 2, 0};
 
-    std::vector<int> expected_arr[3];
-    expected_arr[0] = {7, 5, 16, 0};
-    expected_arr[1] = {1, 2, 3, 4, 5, 0};
-    expected_arr[2] = {1, 2, 0};
-
-    char input_str[] = "3 "
+    char inputStr[] = "3 "
                        "7 5 16 0 "
                        "1 2 3 4 5 0 "
                        "1 2 0 ";
 
-    FILE *f = fmemopen(input_str, strlen(input_str), "r");
+    FILE *f = fmemopen(inputStr, strlen(inputStr), "r");
 
     int len = 0;
     int err = read_array_len(f, &len);
@@ -105,8 +104,8 @@ TEST(ReadVectorArray, TestBasic)
 
     for (size_t i = 0; i < len; i++)
     {
-        ASSERT_EQ(expected_arr[i].size(), arr[i]->size);
-        ASSERT_EQ_VECTORS(arr[i], expected_arr[i], arr[i]->size);
+        ASSERT_EQ(expectedArr[i].size(), arr[i]->size);
+        ASSERT_EQ_VECTORS(arr[i], expectedArr[i], arr[i]->size);
     }
 
     free_vector_array(arr, len);
@@ -114,14 +113,14 @@ TEST(ReadVectorArray, TestBasic)
     fclose(f);
 }
 
-TEST(ReadVectorArray, NegTestInvalidData)
+TEST(readVectorArray, negTestInvalidData)
 {
-    char input_str[] = "3 "
+    char inputStr[] = "3 "
                        "a 5 16 0 "
                        "1 2 3 4 5 0 "
                        "1 2 0 ";
 
-    FILE *f = fmemopen(input_str, strlen(input_str), "r");
+    FILE *f = fmemopen(inputStr, strlen(inputStr), "r");
 
     int len = 0;
     int err = read_array_len(f, &len);
@@ -137,19 +136,19 @@ TEST(ReadVectorArray, NegTestInvalidData)
     fclose(f);
 }
 
-TEST(AligVectors, TestBasic)
+TEST(aligVectors, testBasic)
 {
-    std::vector<int> expected_arr[3];
-    expected_arr[0] = {7, 5, 16, 0, 0, 0};
-    expected_arr[1] = {1, 2, 3, 4, 5, 0};
-    expected_arr[2] = {1, 2, 0, 0, 0, 0};
+    std::vector<int> expectedArr[3];
+    expectedArr[0] = {7, 5, 16, 0, 0, 0};
+    expectedArr[1] = {1, 2, 3, 4, 5, 0};
+    expectedArr[2] = {1, 2, 0, 0, 0, 0};
 
-    char input_str[] = "3 "
+    char inputStr[] = "3 "
                        "7 5 16 0 "
                        "1 2 3 4 5 0 "
                        "1 2 0 ";
 
-    FILE *f = fmemopen(input_str, strlen(input_str), "r");
+    FILE *f = fmemopen(inputStr, strlen(inputStr), "r");
 
     int len = 0;
     int err = read_array_len(f, &len);
@@ -168,8 +167,8 @@ TEST(AligVectors, TestBasic)
 
     for (size_t i = 0; i < len; i++)
     {
-        ASSERT_EQ(expected_arr[i].size(), arr[i]->size);
-        ASSERT_EQ_VECTORS(arr[i], expected_arr[i], arr[i]->size);
+        ASSERT_EQ(expectedArr[i].size(), arr[i]->size);
+        ASSERT_EQ_VECTORS(arr[i], expectedArr[i], arr[i]->size);
     }
     free_vector_array(arr, len);
     fclose(f);

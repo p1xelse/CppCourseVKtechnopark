@@ -12,6 +12,17 @@
 
 #include "vector_array.h"
 
+#define PROMPT_STR                                          \
+    "The program expands all vectors to the largest size\n" \
+    "Enter the number of vectors.\n"                        \
+    "Then the vectors themselves ending in zero.\n"         \
+    "\n"                                                    \
+    "Example:\n"                                            \
+    "2\n"                                                   \
+    "1 2 3 4 0\n"                                           \
+    "1 3 0\n"                                               \
+    "----START----\n"
+
 void error_handler(int err) {
     switch (err) {
         case ERR_MEM:
@@ -36,16 +47,7 @@ void error_handler(int err) {
 }
 
 void print_input_prompt() {
-    printf(
-        "The program expands all vectors to the largest size\n"
-        "Enter the number of vectors.\n"
-        "Then the vectors themselves ending in zero.\n"
-        "\n"
-        "Example:\n"
-        "2\n"
-        "1 2 3 4 0\n"
-        "1 3 0\n"
-        "----START----\n");
+    printf(PROMPT_STR);
 }
 
 int main() {

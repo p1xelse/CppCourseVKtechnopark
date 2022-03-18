@@ -3,13 +3,13 @@ on: push
 jobs:
   check:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: p1xelelse/image_for_cpp
     steps:
       - uses: actions/checkout@v2 
       - run: make check
   build:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: p1xelelse/image_for_cpp
     needs: [check]
     steps:
     - uses: actions/checkout@v2 
@@ -20,15 +20,14 @@ jobs:
         path: build
   test:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: p1xelelse/image_for_cpp
     needs: [build]
     steps:
       - uses: actions/checkout@v2 
       - run: make test
-      - run: make coverage
   memtest:
     runs-on: ubuntu-latest
-    container: leshiy1295/gcc_linters_valgrind_cmake_gtest
+    container: p1xelelse/image_for_cpp
     needs: [build]
     steps:
       - uses: actions/checkout@v2 
