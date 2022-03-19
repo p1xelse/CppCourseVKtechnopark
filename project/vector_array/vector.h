@@ -16,11 +16,11 @@ typedef struct {
 } vector_t;
 
 vector_t *vector_init();
-int vector_push_back(vector_t *vector, int elem);
-int vector_pop_back(vector_t *vector);
-void vector_free(vector_t *vector);
-int vector_read(vector_t *vector, FILE *f);
-int vector_extend(vector_t *vector, int extend_size);
-void print_vector(vector_t *vector);
+int vector_push_back(vector_t *const vector, const int elem);
+int vector_pop_back(vector_t *const vector);
+void vector_free(vector_t *const vector);
+int vector_read(vector_t *const vector, FILE *f);
+int vector_extend(vector_t *const vector, const int extend_size);
+void print_vector(vector_t *const vector);
 
 #endif  // PROJECT_VECTOR_ARRAY_VECTOR_H_

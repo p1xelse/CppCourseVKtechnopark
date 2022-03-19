@@ -17,7 +17,11 @@ vector_t *vector_init() {
     return vector;
 }
 
-static int vector_grow(vector_t *vector) {
+static int vector_grow(vector_t *const vector) {
+    if (vector == NULL) {
+        return ERR_MEM;
+    }
+
     int newBufferSize =
         vector->capacity > DEFAULT_INIT_SIZE * STEP_CAPACITY_GROW
             ? vector->size
@@ -35,7 +39,7 @@ static int vector_grow(vector_t *vector) {
     return 0;
 }
 
-int vector_push_back(vector_t *vector, int elem) {
+int vector_push_back(vector_t *const vector, const int elem) {
     int err = 0;
     if (vector->size == vector->capacity) err = vector_grow(vector);
 
@@ -44,27 +48,28 @@ int vector_push_back(vector_t *vector, int elem) {
     return err;
 }
 
-int vector_read(vector_t *vector, FILE *f) {
+int vector_read(vector_t *const vector, FILE *f) {
     int err = 0;
 
     int cur_number = 1;
 
     for (int i = 0; !err && cur_number; i++) {
-        if (fscanf(f, "%d", &cur_number))
+        if (fscanf(f, "%d", &cur_number)) {
             err = vector_push_back(vector, cur_number);
-        else
+        } else {
             err = ERR_READ_ELEMENTS;
+        }
     }
 
     return err;
 }
 
-void vector_free(vector_t *vector) {
+void vector_free(vector_t *const vector) {
     free(vector->buffer);
     free(vector);
 }
 
-int vector_extend(vector_t *vector, int extend_size) {
+int vector_extend(vector_t *const vector, const int extend_size) {
     int err = 0;
     if (extend_size < vector->size) err = ERR_EXTEND_SIZE;
 
@@ -75,7 +80,7 @@ int vector_extend(vector_t *vector, int extend_size) {
     return err;
 }
 
-void print_vector(vector_t *vector) {
+void print_vector(vector_t *const vector) {
     for (int i = 0; i < vector->size; i++) {
         printf("%d ", vector->buffer[i]);
     }
