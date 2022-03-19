@@ -34,16 +34,7 @@ jobs:
           export CODECOV_TOKEN='5c4fad9a-e84d-498a-b995-04dbc35c51ba'
           curl -Os https://uploader.codecov.io/latest/linux/codecov                                                
           chmod +x codecov
-          ./codecov -t ${CODECOV_TOKEN}
- 
-      - uses: codecov/codecov-action@v2
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          files: build/coverage.xml
-          flags: unittests 
-          name: codecov-umbrella 
-          fail_ci_if_error: true 
-          verbose: true 
+          ./codecov -t ${CODECOV_TOKEN} 
 
   memtest:
     runs-on: ubuntu-latest
