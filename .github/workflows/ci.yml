@@ -30,6 +30,15 @@ jobs:
         with:
           path: build/report/vector_array
 
+      - uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: builr/coverage.xml
+          flags: unittests 
+          name: codecov-umbrella 
+          fail_ci_if_error: true 
+          verbose: true 
+
   memtest:
     runs-on: ubuntu-latest
     container: p1xelelse/image_for_cpp
