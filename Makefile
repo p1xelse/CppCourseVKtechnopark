@@ -1,7 +1,7 @@
 .PHONY: build check test memtest clear
 
 check:
-	sh ./run_linters.sh
+	./run_linters.sh
 
 build:
 	mkdir -p build && cd build && cmake .. && cmake --build .
