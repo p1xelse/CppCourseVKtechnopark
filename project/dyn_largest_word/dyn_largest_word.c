@@ -95,7 +95,6 @@ int get_largest_word_thread(char *str, const char **word, char *delimeters) {
     if (delimeters == NULL) {
         return ERR_NULL_DELIM;
     }
-    
     int err = 0;
 
     words_arr_t arr;
