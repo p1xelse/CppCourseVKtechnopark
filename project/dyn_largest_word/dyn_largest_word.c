@@ -53,9 +53,6 @@ void *thread_find_largest_word(void *arg) {
             data.errflag = ERR_MUTEX_EXCHANGE;
             return arg;
         }
-        // printf("chank(%d %d)\n", chank->beg_ind, chank->len);
-        // printf("index  = %d\n", cur_index);
-        // printf("%s", words_arr.arr[cur_index]);
         int cur_len = strlen(words_arr.arr[cur_index]);
         if (cur_len > data.max_len) {
             data.max_len = cur_len;
