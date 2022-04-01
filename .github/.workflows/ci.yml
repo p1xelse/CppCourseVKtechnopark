@@ -1,0 +1,48 @@
+on: push
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    container: p1xelelse/image_for_cpp
+    steps:
+      - uses: actions/checkout@v2 
+      - run: make check
+  build:
+    runs-on: ubuntu-latest
+    container: p1xelelse/image_for_cpp
+    needs: [check]
+    steps:
+    - uses: actions/checkout@v2 
+    - run: make build
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        path: build
+  test:
+    runs-on: ubuntu-latest
+    container: p1xelelse/image_for_cpp
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2 
+      - run: make test
+      - name: Upload code coverage artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: build/report/
+      - name: Upload reports to Codecov
+        run: |
+          export CODECOV_TOKEN='5c4fad9a-e84d-498a-b995-04dbc35c51ba'
+          curl -Os https://uploader.codecov.io/latest/linux/codecov                                                
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN} 
+  memtest:
+    runs-on: ubuntu-latest
+    container: p1xelelse/image_for_cpp
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v2 
+      - run: make memtest
+      - name: Upload valgrind artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          path: valgrind.log
