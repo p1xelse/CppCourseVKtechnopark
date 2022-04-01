@@ -2,7 +2,6 @@
 
 #include <ctype.h>
 #include <pthread.h>
-// #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -10,15 +9,9 @@
 #include "dyn_largest_word.h"
 #include "words_arr.h"
 
-// void print_infl(chank_t *arr, int len) {
-//     for (int i = 0; i < len; i++) {
-//         printf("(%d; %d)\n", arr[i].beg_ind, arr[i].len);
-//     }
-// }
-
 typedef struct {
-    pthread_mutex_t mutex;  // mutex for value protection
-    size_t max_len;         // protected value
+    pthread_mutex_t mutex;
+    size_t max_len;
     size_t index_max_len_word;
     int errflag;
 } data_t;
@@ -36,7 +29,7 @@ static void data_init() {
     data.index_max_len_word = 0;
 }
 
-void *thread_find_largest_word(void *arg) {
+static void *thread_find_largest_word(void *arg) {
     chank_t *chank = arg;
 
     int ind =
@@ -69,7 +62,7 @@ void *thread_find_largest_word(void *arg) {
     return arg;
 }
 
-void split_len_to_chank(chank_t *arr, int count_chanks, int len) {
+static void split_len_to_chank(chank_t *arr, int count_chanks, int len) {
     int chank_len = 0;
     chank_len = len / count_chanks;
     int mod = len % count_chanks;
@@ -102,6 +95,7 @@ int get_largest_word_thread(char *str, const char **word, char *delimeters) {
     if (delimeters == NULL) {
         return ERR_NULL_DELIM;
     }
+    
     int err = 0;
 
     words_arr_t arr;
