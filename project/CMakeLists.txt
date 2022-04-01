@@ -2,6 +2,8 @@ add_subdirectory(words_array)
 add_subdirectory(st_largest_word)
 add_subdirectory(dyn_largest_word)
 
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pthread")
+
 add_executable(${PROJECT_NAME} main.c)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${DYN_LARGEST_WORD_INCLUDE_DIRS} ${ST_LARGEST_WORD_INCLUDE_DIRS})
