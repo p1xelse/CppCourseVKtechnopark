@@ -18,9 +18,15 @@ int get_count_words(char *str, char *delimeters) {
     return count;
 }
 
-void init_words_array(words_arr_t *arr) {
+int init_words_array(words_arr_t *arr) {
+    if (arr == NULL) {
+        return ERR_NULL_PTR_INIT;
+    }
+
     arr->arr = NULL;
     arr->len = 0;
+
+    return 0;
 }
 
 void free_words_array(words_arr_t *arr) {

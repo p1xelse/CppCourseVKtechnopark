@@ -10,8 +10,5 @@ add_library(${PROJECT_NAME} SHARED ${SOURCES})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${WORDS_ARRAY_LIB})
 target_include_directories(${PROJECT_NAME} PUBLIC ${WORDS_ARRAY_LIB_INCLUDE_DIRS})
 
-# link_directories()
-# target_include_directories()
-
 set(DYN_LARGEST_WORD_LIB ${PROJECT_NAME} PARENT_SCOPE)
 set(DYN_LARGEST_WORD_INCLUDE_DIRS ${INCLUDE_DIRS} PARENT_SCOPE)

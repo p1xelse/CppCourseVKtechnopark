@@ -1,11 +1,10 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(CompareImpl)
 
-
-
 OPTION(TEST "Run test" OFF)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -Werror -Wpedantic")
+cmake_policy(SET CMP0064 NEW)
 
 if (TEST)
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -coverage -lgcov" )

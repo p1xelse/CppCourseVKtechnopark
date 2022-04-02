@@ -1,12 +1,13 @@
 #define _GNU_SOURCE
 
+#include "dyn_largest_word.h"
+
 #include <ctype.h>
 #include <pthread.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 
-#include "dyn_largest_word.h"
 #include "words_arr.h"
 
 typedef struct {
@@ -62,7 +63,11 @@ static void *thread_find_largest_word(void *arg) {
     return arg;
 }
 
-static void split_len_to_chank(chank_t *arr, int count_chanks, int len) {
+static int split_len_to_chank(chank_t *arr, int count_chanks, int len) {
+    if (arr == NULL) {
+        return ERR_MEM;
+    }
+
     int chank_len = 0;
     chank_len = len / count_chanks;
     int mod = len % count_chanks;
@@ -85,6 +90,8 @@ static void split_len_to_chank(chank_t *arr, int count_chanks, int len) {
             arr[i].beg_ind = arr[i - 1].beg_ind + arr[i - 1].len;
         }
     }
+
+    return 0;
 }
 
 int get_largest_word_thread(char *str, const char **word, char *delimeters) {
@@ -98,9 +105,10 @@ int get_largest_word_thread(char *str, const char **word, char *delimeters) {
     int err = 0;
 
     words_arr_t arr;
-    init_words_array(&arr);
-
-    err = str_split(str, delimeters, &arr);
+    err = init_words_array(&arr);
+    if (!err) {
+        err = str_split(str, delimeters, &arr);
+    }
 
     if (err) {
         return err;
@@ -113,7 +121,7 @@ int get_largest_word_thread(char *str, const char **word, char *delimeters) {
     pthread_t threadIds[THREAD_COUNT];
     chank_t info_arr[THREAD_COUNT];
 
-    split_len_to_chank(info_arr, THREAD_COUNT, arr.len);
+    err = split_len_to_chank(info_arr, THREAD_COUNT, arr.len);
 
     data_init();
 

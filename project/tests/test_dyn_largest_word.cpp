@@ -6,11 +6,14 @@ extern "C" {
 #include "dyn_largest_word.h"
 }
 
+#define ERR_OPEN_FILE 10
+#define ERR_ALLOC_MEM 11
+
 char *readFile(const std::string &fileName, int *err) {
     *err = 0;
     std::ifstream f(fileName);
     if (!f) {
-        *err = 10;
+        *err = ERR_OPEN_FILE;
         return NULL;
     }
 
@@ -19,7 +22,7 @@ char *readFile(const std::string &fileName, int *err) {
     char *str = new char[size + 1];
 
     if (str == NULL) {
-        *err = 11;
+        *err = ERR_ALLOC_MEM;
         return NULL;
     }
 

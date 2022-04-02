@@ -48,37 +48,39 @@ void EXPECT_EQ_WORDS_ARR(words_arr_t *expected, words_arr_t *arr) {
 }
 
 TEST(strSplit, testBasic) {
-    char inputStr[] = "Hello world Bay";
-    char delim[] = " ";
-
     const char *expect_words[] = {"Hello", "world", "Bay"};
     int expect_len = 3;
     words_arr_t expect_arr = {expect_words, expect_len};
 
     words_arr_t arr;
-    init_words_array(&arr);
-    int err = str_split(inputStr, delim, &arr);
+    int err = init_words_array(&arr);
+
+    if (!err) {
+        char inputStr[] = "Hello world Bay";
+        char delim[] = " ";
+        err = str_split(inputStr, delim, &arr);
+    }
 
     if (0 != err) {
         EXPECT_EQ_WORDS_ARR(&arr, &expect_arr);
     }
     EXPECT_EQ(0, err);
     free_words_array(&arr);
-
-
 }
 
 TEST(strSplit, testOneWord) {
-    char inputStr[] = "Helloasdasdasdsadasdasd";
-    char delim[] = " ";
-
     const char *expect_words[] = {"Helloasdasdasdsadasdasd"};
     int expect_len = 1;
     words_arr_t expect_arr = {expect_words, expect_len};
 
     words_arr_t arr;
-    init_words_array(&arr);
-    int err = str_split(inputStr, delim, &arr);
+    int err = init_words_array(&arr);
+
+    if (!err) {
+        char inputStr[] = "Helloasdasdasdsadasdasd";
+        char delim[] = " ";
+        err = str_split(inputStr, delim, &arr);
+    }
 
     if (0 != err) {
         EXPECT_EQ_WORDS_ARR(&arr, &expect_arr);
@@ -88,19 +90,19 @@ TEST(strSplit, testOneWord) {
 }
 
 TEST(strSplit, testEmptyStr) {
-    char inputStr[] = "";
-    char delim[] = " ";
-
     words_arr_t arr;
-    init_words_array(&arr);
-    int err = str_split(inputStr, delim, &arr);
+    int err = init_words_array(&arr);
+    if (!err) {
+        char inputStr[] = "";
+        char delim[] = " ";
+        err = str_split(inputStr, delim, &arr);
+    }
     free_words_array(&arr);
     ASSERT_NE(0, err);
 }
 
 TEST(findIndexLargestWord, testBasic) {
-    const char *words[] = {"Hello", "world",
-    "asdasdasdasdasdasdasdasdasdasd",
+    const char *words[] = {"Hello", "world", "asdasdasdasdasdasdasdasdasdasd",
                            "asdada", "asdasdasdasdasdassda"};
     int expected_index = 2;
 

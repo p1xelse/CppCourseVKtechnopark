@@ -42,6 +42,57 @@ char *readFile(char *filename, int *err) {
     return str;
 }
 
+typedef enum { BASIC_IMPL, THREAD_IMPL } impl_t;
+
+int get_avg_time(char *str, const int count_measurments, impl_t type,
+                 double *avg_time) {
+    int err = 0;
+    double elapsed_finish = 0;
+
+    for (int i = 0; i < count_measurments; i++) {
+        const char *word = NULL;
+        char delim[] = " ;,\n.";
+        char *str1 = strdup(str);
+
+        if (!str1) {
+            printf("Error mem during stress test");
+            return ERR_MEM;
+        }
+
+        struct timespec start, finish;
+
+        if (type == BASIC_IMPL) {
+            clock_gettime(CLOCK_MONOTONIC, &start);
+            err = get_largest_word(str1, &word, delim);
+            clock_gettime(CLOCK_MONOTONIC, &finish);
+        } else if (type == THREAD_IMPL) {
+            clock_gettime(CLOCK_MONOTONIC, &start);
+            err = get_largest_word_thread(str1, &word, delim);
+            clock_gettime(CLOCK_MONOTONIC, &finish);
+        }
+
+        if (err) {
+            free(str1);
+            printf("Error in func during stress test");
+            return ERR_FUNC;
+        }
+
+        free((void *)word);
+
+        double elapsed;
+        elapsed = (finish.tv_sec - start.tv_sec);
+        elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+        elapsed_finish += elapsed;
+
+        free(str1);
+    }
+
+    elapsed_finish /= count_measurments;
+    *avg_time = elapsed_finish;
+
+    return err;
+}
+
 int main(int argc, char *argv[]) {
     if (argc < 2) {
         return ERR_ARGC;
@@ -57,80 +108,24 @@ int main(int argc, char *argv[]) {
     }
 
     const int COUNT_MEASUREMENTS = 20;
-    double elapsed_1_finish = 0;
 
-    for (int i = 0; i < COUNT_MEASUREMENTS; i++) {
-        const char *word = NULL;
-        char delim[] = " ;,\n.";
-        char *str1 = strdup(str);
+    double avg_time_basic;
+    err = get_avg_time(str, COUNT_MEASUREMENTS, BASIC_IMPL, &avg_time_basic);
 
-        if (!str1) {
-            printf("Error mem during stress test");
-            return ERR_MEM;
-        }
-
-        struct timespec start, finish;
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        err = get_largest_word(str1, &word, delim);
-        clock_gettime(CLOCK_MONOTONIC, &finish);
-
-        if (err) {
-            free(str1);
-            printf("Error in func during stress test");
-            return ERR_FUNC;
-        }
-
-        free((void *)word);
-
-        double elapsed_1;
-        elapsed_1 = (finish.tv_sec - start.tv_sec);
-        elapsed_1 += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
-        elapsed_1_finish += elapsed_1;
-
-        free(str1);
-    }
-
-    elapsed_1_finish /= COUNT_MEASUREMENTS;
-
-    double elapsed_2_finish = 0;
-
-    for (int i = 0; i < COUNT_MEASUREMENTS; i++) {
-        const char *word = NULL;
-        char delim[] = " ;,\n.";
-        char *str1 = strdup(str);
-
-        if (!str1) {
-            printf("Error mem during stress test");
-            return ERR_MEM;
-        }
-
-        struct timespec start, finish;
-        clock_gettime(CLOCK_MONOTONIC, &start);
-        err = get_largest_word_thread(str1, &word, delim);
-        clock_gettime(CLOCK_MONOTONIC, &finish);
-
-        if (err) {
-            free(str1);
-            printf("Error in func during stress test");
-            return ERR_FUNC;
-        }
-
-        free((void *)word);
-
-        double elapsed_1;
-        elapsed_1 = (finish.tv_sec - start.tv_sec);
-        elapsed_1 += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
-        elapsed_2_finish += elapsed_1;
-
-        free(str1);
+    double avg_time_thread;
+    if (!err) {
+        err = get_avg_time(str, COUNT_MEASUREMENTS, THREAD_IMPL,
+                           &avg_time_thread);
     }
 
     free(str);
+    
+    if (!err) {
+        printf("Basic impl time - %lf\n", avg_time_basic);
+        printf("Threads impl time - %lf\n", avg_time_thread);
+    } else {
+        printf("Error during measurments");
+    }
 
-    elapsed_2_finish /= COUNT_MEASUREMENTS;
-
-    printf("Basic impl time - %lf\n", elapsed_1_finish);
-    printf("Threads impl time - %lf\n", elapsed_2_finish);
-
-    return 0;
+    return err;
 }

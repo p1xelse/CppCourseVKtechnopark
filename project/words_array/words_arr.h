@@ -3,13 +3,14 @@
 
 #define ERR_MEM 20
 #define ERR_NO_WORDS 21
+#define ERR_NULL_PTR_INIT 22
 
 typedef struct {
     const char **arr;
     int len;
 } words_arr_t;
 
-void init_words_array(words_arr_t *arr);
+int init_words_array(words_arr_t *arr);
 void free_words_array(words_arr_t *arr);
 
 int get_count_words(char *str, char *delimeters);
