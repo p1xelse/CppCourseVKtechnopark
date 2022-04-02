@@ -14,7 +14,7 @@
 #define ERR_ARGC 12
 #define ERR_FUNC 13
 
-char *readFile(char *filename, int *err) {
+char *read_file(char *filename, int *err) {
     *err = 0;
     FILE *f = fopen(filename, "r");
 
@@ -29,7 +29,7 @@ char *readFile(char *filename, int *err) {
     char *str = malloc(size + 1);
 
     if (str == NULL) {
-        *err = 11;
+        *err = ERR_MEM;
     }
 
     if (!*err) {
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
     }
 
     int err = 0;
-    char *str = readFile(argv[1], &err);
+    char *str = read_file(argv[1], &err);
 
     if (err) {
         free(str);
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
     }
 
     free(str);
-    
+
     if (!err) {
         printf("Basic impl time - %lf\n", avg_time_basic);
         printf("Threads impl time - %lf\n", avg_time_thread);

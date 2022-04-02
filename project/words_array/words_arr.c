@@ -42,7 +42,9 @@ void free_words_array(words_arr_t *arr) {
 int str_split(char *str, char *delimeters, words_arr_t *arr) {
     int count_words = get_count_words(str, delimeters);
 
-    if (count_words == 0) return ERR_NO_WORDS;
+    if (count_words == 0) {
+        return ERR_NO_WORDS;
+    }
 
     arr->len = count_words;
     arr->arr = malloc(sizeof(char *) * count_words);

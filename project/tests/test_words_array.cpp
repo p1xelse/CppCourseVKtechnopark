@@ -1,8 +1,17 @@
 #include <gtest/gtest.h>
 
 extern "C" {
-
 #include "words_arr.h"
+}
+
+void EXPECT_EQ_WORDS_ARR(words_arr_t *expected, words_arr_t *arr) {
+    if (expected->len == arr->len) {
+        for (int i = 0; i < expected->len; i++) {
+            EXPECT_STREQ(arr->arr[i], expected->arr[i]);
+        }
+    }
+
+    EXPECT_EQ(expected->len, arr->len);
 }
 
 TEST(getCountWords, testBasic) {
@@ -35,16 +44,6 @@ TEST(getCountWords, testEmptyStr) {
 
     int count = get_count_words(inputStr, delim);
     EXPECT_EQ(0, count);
-}
-
-void EXPECT_EQ_WORDS_ARR(words_arr_t *expected, words_arr_t *arr) {
-    if (expected->len == arr->len) {
-        for (int i = 0; i < expected->len; i++) {
-            EXPECT_STREQ(arr->arr[i], expected->arr[i]);
-        }
-    }
-
-    EXPECT_EQ(expected->len, arr->len);
 }
 
 TEST(strSplit, testBasic) {
@@ -98,7 +97,7 @@ TEST(strSplit, testEmptyStr) {
         err = str_split(inputStr, delim, &arr);
     }
     free_words_array(&arr);
-    ASSERT_NE(0, err);
+    EXPECT_NE(0, err);
 }
 
 TEST(findIndexLargestWord, testBasic) {
@@ -109,7 +108,7 @@ TEST(findIndexLargestWord, testBasic) {
     int index =
         find_index_largest_word(words, sizeof(words) / sizeof(words[0]));
 
-    ASSERT_EQ(index, expected_index);
+    EXPECT_EQ(index, expected_index);
 }
 
 TEST(findIndexLargestWord, testFirstIndex) {
@@ -119,7 +118,7 @@ TEST(findIndexLargestWord, testFirstIndex) {
     int index =
         find_index_largest_word(words, sizeof(words) / sizeof(words[0]));
 
-    ASSERT_EQ(index, expected_index);
+    EXPECT_EQ(index, expected_index);
 }
 
 TEST(findIndexLargestWord, testLastIndex) {
@@ -130,5 +129,5 @@ TEST(findIndexLargestWord, testLastIndex) {
     int index =
         find_index_largest_word(words, sizeof(words) / sizeof(words[0]));
 
-    ASSERT_EQ(index, expected_index);
+    EXPECT_EQ(index, expected_index);
 }
